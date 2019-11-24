@@ -1,0 +1,7 @@
+MATCH (n) DETACH DELETE n
+
+Deleted 187 nodes, deleted 282 relationships, completed after 41 ms.
+
+Prove the movie graph is gone
+MATCH (n) RETURN n
+(no changes, no records)

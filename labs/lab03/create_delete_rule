@@ -1,0 +1,9 @@
+/*Create a rule that captures DELETEs on venues and instead sets the active flag (created in Lab 02: PostgreSQL Relations, CRUD, and Joins) to FALSE.*/
+
+CREATE RULE delete_venues AS ON DELETE TO venues DO INSTEAD
+  UPDATE venues
+  SET active = FALSE
+  WHERE venue_id = OLD.venue_id;
+
+  /*Venue ID is the primary key of the table
+  Line 5 sets the active flag to False as indicated*/

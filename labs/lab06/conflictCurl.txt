@@ -1,0 +1,37 @@
+// Craft a cURL request that will retrieve conflicting documents from the database using the view you just created
+// Include the cURL request in conflictCurl.txt
+
+// creates document to use in conflict in music DB
+curl -u admin:admin -XPUT "${COUCH_ROOT_URL}/music/conflictView \
+-H "Content-Type: application/json" \
+-d '{ "name": "Conflict View" }'
+
+// confirms document was successfully replicated
+curl -u admin:admin \"${COUCH_ROOT_URL}/music-repl/conflictView"
+
+// updates albums field in replicated document
+curl -u admin:admin -XPUT \ "${COUCH_ROOT_URL}/music/conflictView" \
+-H "Content-Type: application/json" \
+-d '{
+"_id": "conflictView",
+"_rev": "1-e007498c59e95d23912be35545049174",
+"name": "Conflict View",
+"albums": ["Conflict Me Album"]
+}'
+
+// music and music-repl have a document with same _id which makes conflict
+
+curl -u admin:admin -XPUT \ "${COUCH_ROOT_URL}/music/conflictView" \
+-H "Content-Type: application/json" \
+-d '{
+"_id": "conflictView",
+"_rev": "1-e007498c59e95d23912be35545049174", 
+"name": "The Conflicts",
+"albums": ["Conflicting Opinions"]
+}'
+
+
+
+// answer to question after view and conflict has been created - will return conflicting documents and allow user to resolve manually
+
+  curl -u admin:admin \ "${COUCH_ROOT_URL}/music-repl/theconflicts?rev=1-e007498c59e95d23912be35545049174"

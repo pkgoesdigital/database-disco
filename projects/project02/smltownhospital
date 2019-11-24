@@ -1,0 +1,175 @@
+// commands run to build database - note, create commmands can be run in bulk
+// relationship commands must be run separately
+
+// Creating doctor nodes
+// A Doctor has a name and sees many Patients
+CREATE (d1:Doctor {name:'Meredith Grey'})
+CREATE (d2:Doctor {name:'Derek Shepard'})
+CREATE (d3:Doctor {name:'Alex Karev'})
+CREATE (d4:Doctor {name:'Lexi Grey'})
+CREATE (d5:Doctor {name:'Christina Yang'})
+CREATE (d6:Doctor {name:'Izzie Smith'})
+
+// Creating patient nodes
+// A Patient has a name and can have many Illnesses. 
+// A Doctor can be a Patient, but cannot see themselves!
+CREATE (p1:Patient {name:'Sarah Holmes'})
+CREATE (p2:Patient {name:'Jeremy Peterson'})
+CREATE (p3:Patient {name:'Kelsey Decker'})
+CREATE (p4:Patient {name:'Jimmy Fallon'})
+CREATE (p5:Patient {name:'Dax Shepard'})
+
+// shows database in graph format
+MATCH (n) RETURN n;
+
+// ONLY USE ME TO DELETE DATABASE!!!
+MATCH (n)
+OPTIONAL MATCH (n)-[r]-() DELETE n, r
+//
+
+// building specific relationships
+MATCH (d1:Doctor {name: 'Meredith Grey'}), 
+(p2:Patient {name:'Jeremy Peterson'})
+CREATE (d1)-[r1:sees]->(p2)
+
+MATCH (d1:Doctor {name: 'Meredith Grey'}), 
+(p3:Patient {name:'Kelsey Decker'})
+CREATE (d1)-[r2:sees]->(p3)
+
+MATCH (d1:Doctor {name: 'Meredith Grey'}), 
+(p4:Patient {name:'Jimmy Fallon'})
+CREATE (d1)-[r3:sees]->(p4)
+
+MATCH (d1:Doctor {name: 'Meredith Grey'}), 
+(d2:Doctor {name: 'Derek Shepard'})
+CREATE (d1)-[r4:sees]->(d2)
+
+MATCH (d2:Doctor {name: 'Derek Shepard'}), 
+(p5:Patient {name: 'Dax Shepard'})
+CREATE (d2)-[r5:sees]->(p5)
+
+MATCH (d2:Doctor {name:'Derek Shepard'}), 
+(d6:Doctor {name: 'Izzie Smith'})
+CREATE (d2)-[r6:sees]->(d6)
+
+MATCH (d3:Doctor {name: 'Alex Karev'}), 
+(p1:Patient{name:'Sarah Holmes'})
+CREATE (d3)-[r7:sees]->(p1)
+
+MATCH (d2:Doctor {name:'Derek Shepard'}), 
+(d6:Doctor {name: 'Izzie Smith'})
+CREATE (d2)-[r8:sees]->(d6)
+
+MATCH (d6:Doctor {name: 'Izzie Smith'}), 
+(d4:Doctor {name: 'Lexi Grey'})
+CREATE (d6)-[r9:sees]->(d4)
+
+MATCH (d4:Doctor {name: 'Lexi Grey'}), 
+(d5:Doctor {name: 'Christina Yang'})
+CREATE (d4)-[r10:sees]->(d5)
+
+MATCH (d5:Doctor {name: 'Christina Yang'}), 
+(d3:Doctor {name: 'Alex Karev'})
+CREATE (d5)-[r11:sees]->(d3)
+
+// Illnesses
+// An Illness has a name
+CREATE (i1:Illness {name:'Influenza'})
+CREATE (i2:Illness {name:'Common cold'})
+CREATE (i3:Illness {name:'Pneumonia'})
+CREATE (i4:Illness {name:'Bronchitis'})
+CREATE (i5:Illness {name:'Raynons'})
+CREATE (i6:Illness {name:'Depression'})
+
+// building specific relationships between a doctor & a patient, an illness & a treatment
+MATCH (d5:Doctor {name: 'Christina Yang'}), 
+(i1:Illness {name: 'Influenza'})
+CREATE (d5)-[r12:is_diagnosed_with]->(i1)
+
+MATCH (p2:Patient {name:'Jeremy Peterson'}), 
+(i2:Treatment {name:'Common cold'})
+CREATE (p2)-[r13:is_diagnosed_with]->(i2)
+
+
+// A Patient can receive many Treatments
+// A Treatment has a name
+// is treated with 
+CREATE (t1:Treatment {name:'bedrest'})
+CREATE (t2:Treatment {name:'fluids'})
+CREATE (t3:Treatment {name:'prescription'})
+
+MATCH (i1:Illness {name: 'Influenza'}), 
+(rest:Treatment {name: 'bedrest'})
+CREATE (i1)-[r14:is_treated_with]->(rest)
+
+MATCH (i1:Illness {name: 'Influenza'}), 
+(fluids:Treatment {name:'fluids'})
+CREATE (i1)-[r15:is_treated_with]->(fluids)
+
+MATCH (i1:Illness {name: 'Influenza'}),
+(rx:Treatment {name:'prescription'})
+CREATE (i1)-[r16:is_treated_with]->(rx)
+
+MATCH (p4:Illness {name: 'Bronchitis'}),
+(rx:Treatment {name:'prescription'})
+CREATE (p4)-[r17:is_treated_with]->(rx)
+
+MATCH (i2:Illness {name: 'Common cold'}), 
+(rest:Treatment {name: 'bedrest'})
+CREATE (i2)-[r18:is_treated_with]->(rest)
+
+MATCH (i2:Illness {name: 'Common cold'}), 
+(fluids:Treatment {name:'fluids'})
+CREATE (i2)-[r19:is_treated_with]->(fluids)
+
+MATCH (p6:Illness {name: 'Depression'}), 
+(rx:Treatment {name:'prescription'})
+CREATE (p6)-[:is_treated_with]->(rx)
+
+MATCH (p5:Illness {name: 'Raynons'}), 
+(rx:Treatment {name:'prescription'})
+CREATE (p5)-[:is_treated_with]->(rx)
+
+MATCH (p4:Illness {name: 'Bronchitis'}), 
+(fluids:Treatment {name:'fluids'})
+CREATE (p4)-[:is_treated_with]->(fluids)
+
+MATCH (p3:Illness {name: 'Pneumonia'}), 
+(rx:Treatment {name:'prescription'})
+CREATE (p3)-[:is_treated_with]->(rx)
+
+
+// Create Indexes for quick lookup when creating relationships
+CREATE INDEX ON :Doctor(name);
+CREATE INDEX ON :Patient(name);
+CREATE INDEX ON :Illness(name);
+CREATE INDEX ON :Treatment(name);
+
+
+// adding constraints
+CREATE CONSTRAINT ON (d:Doctor) ASSERT d.Doctor IS UNIQUE;
+CREATE CONSTRAINT ON (p:Patient) ASSERT p.Patient IS UNIQUE;
+CREATE CONSTRAINT ON (i:Illness) ASSERT i.Illness IS UNIQUE;
+CREATE CONSTRAINT ON (t:Treatment) ASSERT t.Treatment IS UNIQUE;
+
+// RELATIONSHIPS DEFINED:
+is_treated_with
+is_diagnosed_with
+sees
+
+// loading graph with relationships
+LOAD CSV WITH HEADERS FROM "file:patientsInsertion.csv" AS row
+MATCH (p:Patient {name: row.name})
+MATCH (d:Doctor {name: row.name})
+MERGE (p)-[r:sees]->(d);
+
+LOAD CSV WITH HEADERS FROM "file:treatmentInsertion.csv" AS row
+MATCH (i:Illness {name: row.name})
+MATCH (t:Treatment {name: row.name})
+MERGE (i)-[r:is_treated_with]->(t);
+
+LOAD CSV WITH HEADERS FROM "file:illnessInsertion.csv" AS row
+MATCH (p:Patient {name: row.name})
+MATCH (i:Illness {name: row.name})
+MERGE (p)-[r:is_diagnosed_with]->(i);
+

@@ -1,0 +1,5 @@
+/*Write a case insensitive ILIKE query that finds venues using a partial street address (including a wildcard character and a sequence of characters matching an address for a venue we inserted in class) as the criteria to search for. Include the query inside ilike_venue.sql  and include a comment describing what your query is searching for and what wildcards you used to accomplish the query*/
+
+SELECT * FROM venues WHERE street_address ILIKE '%Blvd%';
+
+/*the query is searching for any values in venues which has any number of the characters for an element like Blvd*/

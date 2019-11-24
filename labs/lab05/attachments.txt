@@ -1,0 +1,21 @@
+CouchDB supports attachments, which are arbitrary files that you can save 
+with documents (similar to email attachments)
+
+Create a cURL command that creates a new document 
+containing a text document as an attachment:
+
+curl -u admin:admin -vX PUT "${COUCH_ROOT_URL}/music/002/textdoc.txt?rev=1-a731a68484dba7b65b38f80084d9bab4"  --data-binary @textdoc.txt -H "Content-Type: text/plain"
+{
+    "ok": true,
+    "id": "002",
+    "rev": "2-f5ae02f834d7a5533c2fd00d94e704db"
+}
+
+Create a cURL request that queries for and returns only the attachment 
+of the document you just inserted:
+
+
+curl -u admin:admin -X GET "${COUCH_ROOT_URL}/music/002/textdoc.txt"
+
+
+Include both the create request and query in attachments.txt

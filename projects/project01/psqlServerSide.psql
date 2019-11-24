@@ -1,0 +1,55 @@
+-- intermediary table creation
+CREATE TABLE recipes_inventory (
+ recipe_id VARCHAR(30) REFERENCES recipes,
+ item_id VARCHAR(30) REFERENCES inventory,
+ recipe_qty INTEGER NOT NULL
+);
+
+-- function should take in parameters a user and a recipe - decided recipeName var in recipe table
+-- because it's more user-friendly than recipe_id
+CREATE OR REPLACE FUNCTION insertOrder(user_id integer, recipeName varchar(30))
+  RETURNS void AS $$
+​
+-- declaring variables for inventory calculations
+DECLARE
+-- Record variables are similar to row-type variables, 
+-- but they have no predefined structure. 
+-- They take on the actual row structure of the row they are assigned during a 
+-- SELECT or FOR command. 
+-- variable for getting inventory fields
+inventoryRecord RECORD;
+intermediary RECORD;
+-- timestamp generation - to be passed back in insert function in place of orderTime
+timeReceived TIMESTAMP:= LOCALTIMESTAMP;
+​
+BEGIN
+​
+FOR intermediary IN SELECT * FROM recipes_inventory 
+WHERE recipeName = recipe
+
+LOOP
+
+    FOR inventoryRecord IN (
+    SELECT * FROM inventory i JOIN recipes_inventory j
+    -- item is used as ingredient in inventory table
+	ON j.itemName =  i.itemName
+	WHERE j.recipeName = recipe )
+	LOOP
+        -- if not enough ingredients, raise exception
+        IF (inventoryRecord.quantity < inventoryRecord.recipe_qty) 
+            THEN RAISE EXCEPTION 'Cannot fulfill order: not enough of %', inventoryRecord.item_id;
+        ELSE
+            UPDATE inventory
+            SET quantity = inventoryRecord.quantity - inventoryRecord.recipe_qty
+			WHERE item_id = inventoryRecord.item_id;
+        END IF;
+	END LOOP;
+​
+END LOOP;
+-- ​passes orderTime as timeReceived by system
+INSERT INTO orders (order_no, id, orderTime, recipeOrdered) VALUES (id,
+                    timeReceived, recipe);
+RAISE NOTICE 'order successful: inventory in stock';
+RETURN;
+END;
+$$ LANGUAGE plpgsql;

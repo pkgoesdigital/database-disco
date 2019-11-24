@@ -1,0 +1,13 @@
+Create cURL commands to create a database with a name of your choice, 
+and then delete that same database
+Include the cURL commands to create and delete the database in database.txt
+
+CREATE database
+curl -u admin:admin -X PUT "${COUCH_ROOT_URL}/deleteme"
+
+VERIFICATION OF CREATION
+curl -u admin:admin -X GET "${COUCH_ROOT_URL}/_all_dbs"
+
+DELETE database
+
+curl -u admin:admin -X DELETE "${COUCH_ROOT_URL}/deleteme"

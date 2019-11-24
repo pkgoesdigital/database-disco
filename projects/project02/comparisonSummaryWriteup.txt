@@ -1,0 +1,40 @@
+(20 points) After you've completed all the tasks above, create a summary writeup comparing the pros and cons of using PostgreSQL and Neo4j 
+to solve this specific problem set. What went well? What didn't? Are there features unique to one database or another that helped you? 
+Describe all of this in your write up. This write up is one of the most important points of the project! 
+Making sure you understand what database is right for the job is one of the most important outcomes of taking this course, 
+so please take some time when writing up your thoughts. 
+
+Extra credit (7.5 points): Answer the following five questions about the data (include the Cypher queries in projects/project02/neo4j/extraCredit.txt, 
+and Postgres queries in projects/project02/postgres/extraCredit.sql) and I'll give you an extra 1.5 points per question (7.5 points total)! 
+If you complete only the Cypher queries and not the Postgres queries, I will give you 1 point per question (5 points total). 
+The Cypher queries are required for graduate students, and will result in a deduction of 15 points (3 points per question) if not implemented. 
+The Postgres queries are extra credit even for graduate students, and are worth 0.5 points per question (2.5 points total):
+
+Pros for Postgres: classic relational database, easy to enforce constraints and hold data within tables relating to entities.
+Is also easy to query and familiar for most people to interact with. Can enforce referential integrity and also prevent
+people from being able to delete data without also deleting the relationship first, which is a good fail safe
+
+Cons for Postgres: Not always as user friendly as I feel about neo4j, and not as fast, or maybe I just feel more satisfied seeing my progress in postgreSQL
+instead of just a CREATE TABLE statement or INSERT statement like postgreSQL gives you.
+
+Pros for Neo4j: The visual interface is incredibly fun to work on and interact with. I really enjoyed this part of the project
+and it really feels like you're making progress when you can see your dataset and all of the relational points with each other together.
+Good that it also does not allow you to delete nodes without deleting the relationship associated to the node as well, though
+it doesn't require to delete the relationship BEFORE you delete the node (as you can do it at the same time) unlike in PostgreSQL where
+you are forced to address the deletion of the relationship before any of the data can be removed.
+The visual representation of the database really helped me determine whether I was building the database correctly
+while I was building it, which was HUGELY faster than my initial try with postgreSQL in project 1. It was also really easy 
+to delete a node or even completely start over in the database. AND the built-in algorithms is an amazing feature!!!!!
+
+Cons for Neo4j: Can be difficult to stay organized as it is a really flexible database structure, and managing the relationships
+I found to be a bit tricky to get right without having duplicate relationships.
+I also found the querying in Neo4j to be a little awkward in terms of syntax. It works as well as postgreSQL, and I think
+that once you use it for awhile you get used to it just like anything else, but it seems a less likely option for those
+who work with relational databases on a regular basis and prefer the SQL way to query databases, instead of the cypher way.
+That being said, I think I still prefer the cypher queries.
+
+Conclusion:
+Unltimately I prefer neo4j for graphing relational data. It allows you to interact with your database in really unique way
+and makes it easy to pinpoint specific points of data, and visually see the relationships between them. Overall, I think
+neo4j is the fastest and most friendly way to better understand your data and find particularly interesting relational situations
+which may not be as obvious in the command line of the SQL databases.

@@ -1,0 +1,80 @@
+﻿CREATE (NancyM:Person {name:'Nancy Meyers', born:1949})
+CREATE
+  (JackN)-[:ACTED_IN {roles:['Harry Sanborn']}]->(SomethingsGottaGive),
+  (DianeK)-[:ACTED_IN {roles:['Erica Barry']}]->(SomethingsGottaGive),
+  (Keanu)-[:ACTED_IN {roles:['Julian Mercer']}]->(SomethingsGottaGive),
+  (NancyM)-[:DIRECTED]->(SomethingsGottaGive),
+  (NancyM)-[:PRODUCED]->(SomethingsGottaGive),
+  (NancyM)-[:WROTE]->(SomethingsGottaGive)
+
+CREATE (BicentennialMan:Movie {title:'Bicentennial Man', released:1999, tagline:"One robot's 200 year journey to become an ordinary man."})
+CREATE (ChrisC:Person {name:'Chris Columbus', born:1958})
+CREATE
+  (Robin)-[:ACTED_IN {roles:['Andrew Marin']}]->(BicentennialMan),
+  (OliverP)-[:ACTED_IN {roles:['Rupert Burns']}]->(BicentennialMan),
+  (ChrisC)-[:DIRECTED]->(BicentennialMan)
+
+CREATE (CharlieWilsonsWar:Movie {title:"Charlie Wilson's War", released:2007, tagline:"A stiff drink. A little mascara. A lot of nerve. Who said they couldn't bring down the Soviet empire."})
+CREATE (JuliaR:Person {name:'Julia Roberts', born:1967})
+CREATE
+  (TomH)-[:ACTED_IN {roles:['Rep. Charlie Wilson']}]->(CharlieWilsonsWar),
+  (JuliaR)-[:ACTED_IN {roles:['Joanne Herring']}]->(CharlieWilsonsWar),
+  (PhilipH)-[:ACTED_IN {roles:['Gust Avrakotos']}]->(CharlieWilsonsWar),
+  (MikeN)-[:DIRECTED]->(CharlieWilsonsWar)
+
+CREATE (ThePolarExpress:Movie {title:'The Polar Express', released:2004, tagline:'This Holiday Season… Believe'})
+CREATE
+  (TomH)-[:ACTED_IN {roles:['Hero Boy', 'Father', 'Conductor', 'Hobo', 'Scrooge', 'Santa Claus']}]->(ThePolarExpress),
+  (RobertZ)-[:DIRECTED]->(ThePolarExpress)
+
+CREATE (ALeagueofTheirOwn:Movie {title:'A League of Their Own', released:1992, tagline:'Once in a lifetime you get a chance to do something different.'})
+CREATE (Madonna:Person {name:'Madonna', born:1954})
+CREATE (GeenaD:Person {name:'Geena Davis', born:1956})
+CREATE (LoriP:Person {name:'Lori Petty', born:1963})
+CREATE (PennyM:Person {name:'Penny Marshall', born:1943})
+CREATE
+  (TomH)-[:ACTED_IN {roles:['Jimmy Dugan']}]->(ALeagueofTheirOwn),
+  (GeenaD)-[:ACTED_IN {roles:['Dottie Hinson']}]->(ALeagueofTheirOwn),
+  (LoriP)-[:ACTED_IN {roles:['Kit Keller']}]->(ALeagueofTheirOwn),
+  (RosieO)-[:ACTED_IN {roles:['Doris Murphy']}]->(ALeagueofTheirOwn),
+  (Madonna)-[:ACTED_IN {roles:['"All the Way" Mae Mordabito']}]->(ALeagueofTheirOwn),
+  (BillPax)-[:ACTED_IN {roles:['Bob Hinson']}]->(ALeagueofTheirOwn),
+  (PennyM)-[:DIRECTED]->(ALeagueofTheirOwn)
+
+CREATE (PaulBlythe:Person {name:'Paul Blythe'})
+CREATE (AngelaScope:Person {name:'Angela Scope'})
+CREATE (JessicaThompson:Person {name:'Jessica Thompson'})
+CREATE (JamesThompson:Person {name:'James Thompson'})
+
+CREATE
+  (JamesThompson)-[:FOLLOWS]->(JessicaThompson),
+  (AngelaScope)-[:FOLLOWS]->(JessicaThompson),
+  (PaulBlythe)-[:FOLLOWS]->(AngelaScope)
+
+CREATE
+  (JessicaThompson)-[:REVIEWED {summary:'An amazing journey', rating:95}]->(CloudAtlas),
+  (JessicaThompson)-[:REVIEWED {summary:'Silly, but fun', rating:65}]->(TheReplacements),
+  (JamesThompson)-[:REVIEWED {summary:'The coolest football movie ever', rating:100}]->(TheReplacements),
+  (AngelaScope)-[:REVIEWED {summary:'Pretty funny at times', rating:62}]->(TheReplacements),
+  (JessicaThompson)-[:REVIEWED {summary:'Dark, but compelling', rating:85}]->(Unforgiven),
+  (JessicaThompson)-[:REVIEWED {summary:"Slapstick redeemed only by the Robin Williams and Gene Hackman's stellar performances", rating:45}]->(TheBirdcage),
+  (JessicaThompson)-[:REVIEWED {summary:'A solid romp', rating:68}]->(TheDaVinciCode),
+  (JamesThompson)-[:REVIEWED {summary:'Fun, but a little far fetched', rating:65}]->(TheDaVinciCode),
+  (JessicaThompson)-[:REVIEWED {summary:'You had me at Jerry', rating:92}]->(JerryMaguire)
+
+WITH TomH as a
+MATCH (a)-[:ACTED_IN]->(m)<-[:DIRECTED]-(d) RETURN a,m,d LIMIT 10
+;
+
+
+a,m,d
+"{name:Tom Hanks,born:1956}","{title:The Da Vinci Code,tagline:Break The Codes,released:2006}","{name:Ron Howard,born:1954}"
+"{name:Tom Hanks,born:1956}","{title:Charlie Wilson's War,tagline:A stiff drink. A little mascara. A lot of nerve. Who said they couldn't bring down the Soviet empire.,released:2007}","{name:Mike Nichols,born:1931}"
+"{name:Tom Hanks,born:1956}","{title:Cloud Atlas,tagline:Everything is connected,released:2012}","{name:Lana Wachowski,born:1965}"
+"{name:Tom Hanks,born:1956}","{title:Cloud Atlas,tagline:Everything is connected,released:2012}","{name:Tom Tykwer,born:1965}"
+"{name:Tom Hanks,born:1956}","{title:Cloud Atlas,tagline:Everything is connected,released:2012}","{name:Lilly Wachowski,born:1967}"
+"{name:Tom Hanks,born:1956}","{title:That Thing You Do,tagline:In every life there comes a time when that thing you dream becomes that thing you do,released:1996}","{name:Tom Hanks,born:1956}"
+"{name:Tom Hanks,born:1956}","{title:Apollo 13,tagline:Houston, we have a problem.,released:1995}","{name:Ron Howard,born:1954}"
+"{name:Tom Hanks,born:1956}","{title:The Polar Express,tagline:This Holiday Season… Believe,released:2004}","{name:Robert Zemeckis,born:1951}"
+"{name:Tom Hanks,born:1956}","{title:You've Got Mail,tagline:At odds in life... in love on-line.,released:1998}","{name:Nora Ephron,born:1941}"
+"{name:Tom Hanks,born:1956}","{title:Sleepless in Seattle,tagline:What if someone you never met, someone you never saw, someone you never knew was the only someone for you?,released:1993}","{name:Nora Ephron,born:1941}"

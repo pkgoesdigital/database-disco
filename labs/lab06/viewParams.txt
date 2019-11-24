@@ -1,0 +1,59 @@
+Find a list of available URL parameters (like limit and startkey) that can be appended to view requests and what they do.
+Include the list of parameters in viewParams.txt
+
+Descending
+By default, CouchDB sorts the keys and outputs the view in ascending order (i.e., A-Z). By specifying descending=true, the view results will be output in descending order (i.e., Z-A).
+
+One artifact of this process is that if you are searching for a range of items then you must also reverse the startkey and endkey values, because the order in which CouchDB will reach has changed. For example, the query:
+
+/recipes/_design/simple/_view/bytitle?startkey=Lasagne&endkey=Pasta
+Should be written as:
+
+/recipes/_design/simple/_view/bytitle?descending=true&endkey=Lasagne&startkey=Pasta
+
+
+
+Limit
+Limit the output the specified number of rows. For example, to limit the output to 10 rows:
+
+/recipes/_design/simple/_view/bytitle?limit=10
+
+
+
+Skip
+Skip the specified number of rows before starting the output. For example:
+
+/recipes/_design/simple/_view/bytitle?skip=100
+CouchDB will process 100 rows of view output, and then only start outputting row values on the 101st row.
+
+You can use this in combination with the limit parameter to paginate through the output, but this is a relatively expensive operation, as CouchDB still actually accesses the row information.
+
+
+
+
+Stale
+Allow stale views. Because CouchDB only rebuilds the view index; when the view is accessed, it can mean that there is a delay between requesting the view information and the output being generated, because the view index must be updated. If you are not worried about updating the view index (or including any records) since the last time the view was updated, you can use stale=true to use the existing view index and not update the view data. This is quicker, but may output stale information as it won’t include any of the recent document updates, deletions, and inserts since the view was last updated.
+
+https://www.oreilly.com/library/view/getting-started-with/9781449309589/ch04.html
+
+MORE PARAMETERS:
+https://www.oreilly.com/library/view/writing-and-querying/9781449303693/ch04.html
+
+Reduce
+Startkey
+startkey_docid
+Endkey
+endkey_docid
+inclusive_end
+Group
+group_level
+Include_docs
+
+
+
+
+
+Helpful Info about using Views and emit()
+https://docs.couchbase.com/server/6.0/learn/views/views-query-samples.html#general-advice
+
+

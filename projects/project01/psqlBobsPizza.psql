@@ -1,0 +1,100 @@
+-- Paula Klimas, BobsPizza assignment 1
+
+-- creates database
+createdb bobsPizza
+
+-- creates users table
+CREATE TABLE users (
+  id INTEGER NOT NULL,
+ email_address TEXT NOT NULL,
+ first_name TEXT NOT NULL,
+ last_name TEXT NOT NULL,
+ phone TEXT NOT NULL,
+ address TEXT NOT NULL,
+ PRIMARY KEY (id),
+ UNIQUE (id)
+);
+
+-- copies generated users from python script BobsPizza.pynb -> outputs csv
+-- NOTE I couldn't get the script perfect in terms of formatting so if you want to 
+-- re-create the DB use the psqlusers.psql file included in submission - script runs but
+-- syntax is slightly off
+COPY users(id, email_address, first_name, last_name, phone, address) 
+FROM 'Users/paulaklimas/PaulaKlimas/python/users.csv' DELIMITER ',' CSV HEADER;
+
+-- creates inventory table with quantity
+CREATE TABLE inventory (
+-- ingredient id
+ item_id varchar(30),
+--  ingredient
+ itemName TEXT NOT NULL,
+ description TEXT NOT NULL,
+ quantity VARCHAR(9),
+ PRIMARY KEY (item_id),
+ UNIQUE (item_id)
+);
+
+-- creates recipes table
+CREATE TABLE recipes (
+ recipe_id VARCHAR(30),
+ recipeName VARCHAR(30),
+ description TEXT NOT NULL,
+ instructions TEXT NOT NULL,
+ PRIMARY KEY (recipe_id)
+);
+
+-- again, script is a little off so use the psqlrecipes.psql file
+COPY recipes(recipe_id, recipeName, description, instructions) 
+FROM 'Users/paulaklimas/PaulaKlimas/python/recipes.csv' DELIMITER ',' CSV HEADER;
+
+-- creates orders table
+CREATE TABLE orders (
+   order_no VARCHAR(5),
+   id INTEGER NOT NULL REFERENCES users (id),
+   orderTime VARCHAR (8),
+   PRIMARY KEY (order_no),
+   recipeOrdered TEXT NOT NULL REFERENCES recipes (recipe_id)
+);
+
+-- disregard this - used for testing.. order function in ServerSidePSQL.psql
+-- COPY orders(order_no, customer, orderTime, recipeOrdered) 
+-- FROM '/Users/paulaklimas/OneDrive - University of Denver/NoSQL/nosql-db/Docker/postgres/orders.csv' DELIMITER ',' CSV HEADER;
+
+-- intermediary table for tracking recipes which have ingredients
+CREATE TABLE recipes_inventory (
+ recipeName VARCHAR(30) REFERENCES recipes,
+ item_id VARCHAR(30) REFERENCES inventory,
+ recipe_qty INTEGER NOT NULL
+);
+
+-- used to check data was inserted into DB
+SELECT * FROM users;
+SELECT * FROM inventory;
+SELECT * FROM recipes;
+SELECT * FROM recipes_inventory;
+SELECT * FROM orders;
+
+-- automated 1000 users with bobsPizzaData.py
+INSERT INTO users (id, email_address, first_name, last_name, phone, address)
+ VALUES ('1243','radishes@gmail.com', 'Sara', 'Sultana', '4569900011', '22 Washington Street, Denver CO 80203');
+
+-- automated 26 recipes with bobsPizzaData.py
+INSERT INTO recipes (recipe_id, recipeName, description, ingredients, instructions)
+ VALUES ('001', 'nacho cheese', 'the original cheezy pizza', ,'ingredients', 'put the sauce on the dough with the cheese & bake at 400 for 20 min');
+
+-- made manual inventory for import to DB
+INSERT INTO inventory (item_id, itemName, description, quantity)
+ VALUES ('1','mozzarella', 'white cheese', '89'),
+ ('2', 'pizza crust', 'crust for making pizzas', '8778'),
+ ('3', 'basil', 'herb for italian pizzas', '884'),
+ ('4', 'tomato sauce', 'sauce for making pizzas', '8756'),
+ ('5', 'white sauce', 'sauce for making pizzas', '8756'),
+ ('6', 'pepperoni', 'pepperoni sausage for pizzas', '8756'),
+ ('7', 'sausage', 'sasage for making pizzas', '8756'),
+ ('8', 'pineapple', 'pineapple chunks', '876'),
+ ('9', 'banana peppers', 'yellow spicy sweet peppers', '898'),
+ ('10', 'bell peppers', 'green bell peppers, sliced', '985'),
+ ('11', 'parmesan', 'white cheese', '86');
+
+
+

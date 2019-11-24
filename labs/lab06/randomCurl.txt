@@ -1,0 +1,9 @@
+Craft a cURL request that will retrieve a random artist using the view you just created
+
+
+curl -u admin:admin \ "${COUCH_ROOT_URL}/music/_design/random/_view/artist?startkey=ruby -e 'puts rand"
+
+
+
+● As you can see here, the URL pattern to query for views is
+/<database_name>/_design/<design_doc>/_view/<view_name>

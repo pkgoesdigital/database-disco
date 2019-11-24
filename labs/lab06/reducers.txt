@@ -1,0 +1,14 @@
+What native reducers are available in CouchDB? What are the benefits of using native reducers over custom JavaScript reducers?
+Describe the reducers and their benefits in reducers.txt
+
+Native Reducers:
+_sum 
+_count
+_stats
+
+
+Native reduce functions can work in logarithmic time which is ideal and very fast for querying large databases. Using these built in functions keep you from having to write JavaScript functions and possibly writing a function that is slower than this.
+
+It's also easier to read, faster, and looks better when using built-in functions.
+
+https://docs.couchdb.org/en/stable/ddocs/views/intro.html

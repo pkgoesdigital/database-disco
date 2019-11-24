@@ -1,0 +1,6 @@
+GET, POST, PUT, and DELETE HTTP
+https://docs.couchdb.org/en/1.4.0/api/database.html
+
+Other Methods:
+HEAD, COPY
+https://www.tutorialspoint.com/couchdb/couchdb_http_api

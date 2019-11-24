@@ -1,0 +1,48 @@
+// QUERIES
+Once you have the data inserted, design queries for Postgres and Neo4j that query for a patient's doctors, 
+illnesses, and treatments. Is it possible to return all of this information in one query, 
+or are multiple queries required? Include the queries and answer to the question in 
+projects/project02/queryComparison.txt
+
+NEO4J:
+
+// find all nodes associated with Meredith Grey
+MATCH (MeredithG:Doctor {name: "Meredith Grey"})-->(n) RETURN n;
+
+// find all nodes associated with Jeremy Peterson
+MATCH (:Patient {name: "Jeremy Peterson"})-->(n) RETURN n;
+
+// find all doctors not with last name Grey
+MATCH (:Doctor) WHERE Doctor.name <> 'Grey' RETURN Doctor;
+
+// full text query for particular doctor
+$ curl -X POST http://localhost:7474/db/data/index/node/fulltext \
+-H "Content-Type: application/json" \
+-d '{
+"uri": "http://localhost:7474/db/data/node/24", "key": "name",
+"value" : "Meredith Grey"
+}'
+$ curl http://localhost:7474/db/data/index/node/fulltext?query=name:P*
+
+// how many patients does Meredith Grey have?
+MATCH (d:Doctor {name: "Meredith Grey"})-[:sees-(p:Patients) RETURN count(p);
+
+// how many illnesses have more than 4 treatments?
+MATCH (i: Illness)-[:is_treated_with]->(t:Treatment)
+WITH i, count(t) AS treatment_count
+WHERE treatment_count > 4
+RETURN i.name;
+
+
+POSTGRESQL:
+
+// joins table so query can be made for all patients, doctors, illnesses, & treatments - for a particular doctor
+SELECT * FROM illness, treatment, patient, doctor, doctor_patient
+INNER JOIN (doctor.d_id) ON (doctor_patient.d_id) WHERE (doctor.d_id) EQUALS (d1);
+
+
+
+It isn't really possible to do in neo4j, but could be done with some use of the algorithms maybe?
+You can however pinpoint specific nodes and relationships more easily than you can in POSTGRESQL
+It is possible in POSTGRESQL, but not without a lot of complicated querying, 
+like multiple joins on multiple tables.

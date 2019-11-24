@@ -1,0 +1,3 @@
+Cartesian 2d point queries - using instant.latitude or instant.longitude
+
+https://neo4j.com/docs/cypher-manual/current/syntax/spatial/#cypher-spatial-accessing-components-spatial-instants

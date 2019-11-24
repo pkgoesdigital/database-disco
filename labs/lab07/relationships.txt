@@ -1,0 +1,36 @@
+Create a simple graph describing some of your closest friends, your relationships with them, 
+and even some relationships between your friends. 
+Start with three nodes, including one for yourself, and create five relationships.
+Include all the Cypher commands you wrote to create the graph in relationships.txt
+
+CREATE (p:Person {name:'Paula Klimas', born:1992});
+CREATE (a:Person {name:'Aubreigh Brunschwig', born:1990});
+CREATE (h:Person {name:'Haley Briggs', born: 1992});
+CREATE (s:Person {name:'Samantha Baron', born: 1990});
+
+MATCH (n) RETURN n;
+
+MATCH (p:Person {name: "Paula Klimas"}), 
+(s:Person {name: "Samantha Baron"})
+CREATE (p)-[r:friends_with]->(s);
+
+MATCH (p:Person {name: "Paula Klimas"}), 
+(s:Person {name: "Samantha Baron"})
+CREATE (s)-[r:friends_with]->(p);
+
+MATCH (p:Person {name: "Paula Klimas"}), 
+(h:Person {name: "Haley Briggs"})
+CREATE (p)-[r:friends_with]->(h);
+
+MATCH (p:Person {name: "Paula Klimas"}), 
+(a:Person {name: "Aubreigh Brunschwig"})
+CREATE (p)-[r:friends_with]->(a);
+
+MATCH (s:Person {name: "Samantha Baron"}), 
+(a:Person {name: "Aubreigh Brunschwig"})
+CREATE (s)-[r:friends_with]->(a);
+
+MATCH (h:Person {name: "Haley Briggs"}), 
+(s:Person {name: "Samantha Baron"})
+CREATE (h)-[r:has_met]->(s);
+

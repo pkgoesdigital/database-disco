@@ -1,0 +1,13 @@
+﻿MATCH (people:Person) RETURN people.name LIMIT 10
+
+people.name
+Alice
+Tom
+Ahmed
+Kofi
+Alice
+Tom
+Patty
+Patty
+Keanu Reeves
+Carrie-Anne Moss

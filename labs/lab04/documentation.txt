@@ -1,0 +1,9 @@
+Paula Klimas - NoSQL databases lab04
+
+MongoDB Documentation:
+https://docs.mongodb.com/
+
+MongoDB Regular Expression Documentation
+https://docs.mongodb.com/manual/reference/operator/query/regex/
+
+https://examples.javacodegeeks.com/software-development/mongodb/mongodb-regular-expressions-example/

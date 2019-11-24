@@ -1,0 +1,26 @@
+1) Introduction to movie-graph - contains actors, directors, and movies they've collaborated on
+
+2) Create - Shows a CYPHER query where we are instructed to click on the code block, & execute in the editor - query adds data to the database each time it's run
+This created a graph with relationships INSANELY fast!!!
+
+3) Find - Shows 4 different queries in which individual nodes can be found - first is finding the actor named tom, second is finding the movie with the title Cloud Atlas, third is finding 10 people, and fourth is finding all movies released in the 1990s
+
+4) Query - find patterns within the graph - query the database to find:
+	A list of all the tom hanks movies
+	Who directed Cloud Atlas
+	Find who was Tom Hank's co-actors
+	Find how many people are related / involved with the movie "Cloud Atlas"
+
+5) Solve - the 6 degrees of Kevin Bacon illustration - the shortest path query known as the "Bacon Path"... delicious
+
+Movies and actors up to 4 "hops" away from Kevin Bacon
+Finding the Bacon Path with the built-in shortest path algorithm - is almost instantaneous
+
+6) Recommend - extend the previous Tom Hanks co-actors query to find co-actors who haven't worked with Tom Hanks and Find someone to introduce tom hanks to tom cruise - illustrating the importance and power of using a graph database to make connections between nodes
+
+7) Clean up - takes 41 ms Deleted 187 nodes, deleted 282 relationships
+Prove the graph has been deleted
+
+That's it!
+
+

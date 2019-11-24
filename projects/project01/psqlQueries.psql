@@ -1,0 +1,6 @@
+-- I unfortunately didn't get to finishing the queries with this assignment, but in working with relational databases in previous classes
+-- I know that writing queries and aggregate queries in postgres is much more involved than it was with mongo.
+-- I think querying for broader ranges of data is easier and faster in mongodb overall, as if you're not careful in postgres
+-- it can take a long time for a query to finish, depending on how many aggregates you have and how specific or broad your
+-- data is, AND how large your database is I think the larger the database becomes with postgres, the more difficult
+-- it becomes to query quickly and efficiently, without a lot of database experience.

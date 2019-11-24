@@ -1,0 +1,59 @@
+curl -u admin:admin -X PUT "${COUCH_ROOT_URL}/music/"001"" -d '{
+    " Name ": " Good Friend ",
+    " Artist ": " Emily Walker ",
+    " Genre ": " Singer/Songwriter "
+}'
+{
+    "ok": true,
+    "id": "001",
+    "rev": "1-3fdbb03f4f54811fd721cd00529fcb72"
+}
+
+
+curl -u admin:admin -X PUT "${COUCH_ROOT_URL}/deleteme"
+
+{
+    "ok": true
+}
+
+curl -u admin:admin -X GET "${COUCH_ROOT_URL}/_all_dbs"
+
+{
+    "ok": true
+}
+
+curl -u admin:admin -X DELETE "${COUCH_ROOT_URL}/deleteme"
+
+{
+    "ok": true
+}
+
+curl -u admin:admin -X PUT "${COUCH_ROOT_URL}/music/"002" " -d '{
+    "name": "Wings",
+    "albums": [
+        "Wild Life",
+        "Band on the Run",
+        "London Town"
+    ]
+}'
+{
+    "ok": true,
+    "id": "002",
+    "rev": "1-a731a68484dba7b65b38f80084d9bab4"
+}
+
+
+curl -u admin:admin -X GET "${COUCH_ROOT_URL}/music/"002" "
+{
+    "_id": "002",
+    "_rev": "1-a731a68484dba7b65b38f80084d9bab4"
+}
+
+curl -u admin:admin -vX PUT "${COUCH_ROOT_URL}/music/002/textdoc.txt?rev=1-a731a68484dba7b65b38f80084d9bab4"  --data-binary @textdoc.txt -H "Content-Type: text/plain"
+{
+    "ok": true,
+    "id": "002",
+    "rev": "2-f5ae02f834d7a5533c2fd00d94e704db"
+}
+
+curl -u admin:admin -X GET "${COUCH_ROOT_URL}/music/002/textdoc.txt"

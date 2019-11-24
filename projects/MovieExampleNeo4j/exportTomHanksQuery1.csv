@@ -1,0 +1,4 @@
+﻿MATCH (tom {name: "Tom Hanks"}) RETURN tom
+
+tom
+"{name:Tom Hanks,born:1956}"

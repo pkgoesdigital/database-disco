@@ -1,0 +1,8 @@
+Create a cURL request to PUT a new document into the music database with a specific _id of your choice
+Include the cURL command in put.txt
+
+curl -u admin:admin -X PUT "${COUCH_ROOT_URL}/music/"001"" -d '{
+  " Name ": " Good Friend ",
+  " Artist ": " Emily Walker ",
+  " Genre ": " Singer/Songwriter "
+}'

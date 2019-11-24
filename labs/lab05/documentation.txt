@@ -1,0 +1,6 @@
+
+HTTP API Reference
+https://docs.couchdb.org/en/2.2.0/http-api.html
+
+API Basics
+https://docs.couchdb.org/en/2.2.0/api/basics.html

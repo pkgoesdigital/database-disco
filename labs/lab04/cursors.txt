@@ -1,0 +1,14 @@
+MongoDB queries and cursors
+
+https://docs.mongodb.com/manual/reference/method/js-cursor/
+
+https://docs.mongodb.com/manual/tutorial/iterate-a-cursor/
+
+https://stackoverflow.com/questions/36766956/what-is-a-cursor-in-mongodb
+
+https://medium.com/@thejasonfile/cursor-objects-in-mongodb-5a6193ab6e4a
+
+https://dba.stackexchange.com/questions/193708/aggregation-vs-cursor-for-reshaping-mongodb-documents
+
+https://docs.mongodb.com/manual/reference/method/#query-plan-cache
+

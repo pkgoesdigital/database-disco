@@ -1,0 +1,70 @@
+(20 points) After you've completed all the tasks above, create a summary writeup comparing the pros and 
+cons of using PostgreSQL and MongoDB to solve this specific problem set. What went well? What didn't? 
+Are there features unique to one database or another that helped you (such as transactions in PostgreSQL, 
+or nested collections in MongoDB)? 
+Describe all of this in your writeup. This writeup is one of the most important points of the project! 
+Making sure you understand what database is right for the job is one of the most important outcomes of taking
+ this course, so please take some time when writing up your thoughts. 
+
+
+ PostgreSQL:
+    I honestly don't see many pros to using PostgreSQL, unless you really want to use a relational database to enforce
+    referential integrity. I found the database very hard to work with, hard to visualize, and overall hard to manage.
+    
+    I can't imagine having to create a postgreSQL database with millions of records, however I do think the querying
+    in postgreSQL is so widely recognized in terms of syntax and people who use databases on a regular basis, that it has some value.
+    
+    I also think if you need a relational database that manages one to many relationships, and you need to use joins,
+    then it is a good choice. The fact that in order to use postgreSQL well you need to understand the structure of the
+    database and how the tables relate to each other is critical in using the database to your advantage as a user.
+    
+    What went well? Honestly, not much for this database. I felt sufficient in creating the tables and filling the tables with data
+    after having a really hard time with getting the formatting just right for data import statements.
+    
+    I also think that querying in this database is relatively straight forward, though you need to be careful with how
+    much data you are trying to pull from the database. Using statements like SELECT * FROM table becomes cumbersome and
+    would take a ton of time if you were dealing with a table with millions of records. I think that querying for too
+    much data would also bring your database to a complete halt, so keeping your queries specific is important.
+    
+    The one thing I think I really enjoyed and felt was valuable in postgreSQL was using the intermediary table to keep track
+    of ingredients. Though at first having an intermediary table seemed a little weird and like a difficult table to
+    interact with, I think having the data which is keeping track of inventory in a separate table helps with organization
+    of the database. 
+    
+    Managing the database also proved to be difficult when it came to updating and removing data.
+
+
+ MongoDB:
+
+    I loved working with this database for a variety of reasons. I feel like the creation and insertion of data went well,
+    as I am used to writing code and felt javascript was an easy transition from other programming languages I am familiar with.
+    I also liked that you can write functions and save them directly in the database, which is what I ended up doing.
+    I also wrote generate functions and insert functions separately, which I really liked because it helped me keep track
+    of what I was doing, and how I was inserting data, as well as how the data was being stored.
+    
+   After doing this, I remembered the danger of writing custom JS functions for mongo. I definitely ran into a lot 
+   of trouble with writing the server-side function in mongo for this. I think the server-side function for postgres turned
+   out to be much easier and less difficult to work with and troubleshoot.
+
+    Knowing all of these things on the front end made working with the database and querying for data much easier.
+    I liked that you can query for anything in MongoDB pretty much without restriction, 
+    but I think that the lack of organization and structure within the database could hurt you. 
+    For example, when writing the javascript functions that accessed the ingredients in the inventory
+    table and the recipes table, I had a heck of a time figuring out how to access the data. 
+    
+    Whereas in postgres the data
+    I needed was separated by the intermediary table, the data I needed to do the same for MongoDB was a little
+    more confusing to keep track of, and I'm still not certain I got this function quite right.
+    
+    I also found the ObjectID generation in MongoDB really helpful in terms of finding specific data, and it was nice
+    to not have to keep track of the unique identifiers for the data items like you have to in postgreSQL. Again, this
+    structure does not enforce referencial integrity though, so organization gets a little wonky. BUT since Mongo database
+    is so much easier to query for information than PostgreSQL, it's not a bad compromise.
+    
+    I also think that the MongoDB shell is much better for the user, as it gives more feedback when a query or a function
+    worked. PostgreSQL just didn't return anything unless you explicitly expected it to, which I found to be less user-friendly.
+    For this reason, I think using a database like MongoDB for a project like this, where many people may be interacting
+    with your database on a daily basis, is the better choice. Better to leave relational databases with complex joins
+    and aggregated queries for people who manage databases professionally.
+    
+

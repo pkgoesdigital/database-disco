@@ -1,0 +1,8 @@
+We’ve seen that the emit() method can output keys that are strings. What other types of values does it support? What happens when you emit an array of values as a key?
+Include the answers to these questions in emitKey.txt
+
+Can also output compound types like arrays.
+
+When you emit an array of values as a key, you then have to query the object as a JSON object, so you use JavaScript to do so.
+
+https://www.oreilly.com/library/view/getting-started-with/9781449309589/ch04.html
